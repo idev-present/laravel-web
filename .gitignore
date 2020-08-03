@@ -1,0 +1,26 @@
+# Workflow
+# =============================================================
+.idea/
+.vscode/
+.buildpath
+.project
+.settings/
+.build/
+nbproject/
+/tags
+.netbeans.xml
+
+# OS
+# =============================================================
+.DS_Store
+Thumbs.db
+*.log
+
+# Wordpress
+# =============================================================
+.envs/prod/
+config/certs/
+
+# Frontend
+# =============================================================
+node_modules/

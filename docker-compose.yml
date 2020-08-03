@@ -1,0 +1,61 @@
+version: '3'
+
+services:
+  db:
+    image: mysql:5.6
+    container_name: ${APP_NAME}__database
+    restart: always
+    env_file:
+      - .env
+      - .envs/local/database.env
+    environment:
+      - MYSQL_ROOT_HOST=%
+    volumes:
+      - db_data_local:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    networks:
+      - private_network
+
+  phpfpm:
+    build:
+      context: .
+      dockerfile: ./provision/application/php-fpm/Dockerfile
+    container_name: ${APP_NAME}__web
+    restart: always
+    depends_on:
+      - db
+    env_file:
+      - .env
+      - .envs/local/database.env
+      - .envs/local/web.env
+    volumes:
+      - .:/var/www/html
+      # - ./app:/var/www/html/app
+      # - ./composer.json:/var/www/html/composer.json
+    networks:
+      - private_network
+
+  nginx:
+    image: nginx:latest
+    container_name: ${APP_NAME}__proxy
+    depends_on:
+      - db
+      - phpfpm
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./app:/var/www/html/app
+      - ./config/nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - ./config/certs:/etc/nginx/certs
+    networks:
+      - private_network
+
+volumes:
+  db_data_local: {}
+
+networks:
+  private_network:
+    driver: bridge
