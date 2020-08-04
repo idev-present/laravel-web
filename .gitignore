@@ -19,7 +19,7 @@ Thumbs.db
 # Backend
 # =============================================================
 .envs/prod/
-config/certs/
+/provision/config/certs/
 /storage/*.key
 /vendor
 .env

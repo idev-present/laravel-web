@@ -17,7 +17,7 @@ services:
     networks:
       - private_network
 
-  phpfpm:
+  web:
     build:
       context: .
       dockerfile: ./provision/application/php-fpm/Dockerfile
@@ -31,10 +31,11 @@ services:
       - .envs/local/web.env
     volumes:
       - .:/var/www/html
-      # - ./app:/var/www/html/app
-      # - ./composer.json:/var/www/html/composer.json
+    ports:
+    - "8000:8000"
     networks:
       - private_network
+    command: "php artisan serve"
 
   nginx:
     image: nginx:latest
@@ -47,7 +48,7 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - ./app:/var/www/html/app
+      - .:/var/www/html
       - ./config/nginx/default.conf:/etc/nginx/conf.d/default.conf
       - ./config/certs:/etc/nginx/certs
     networks:

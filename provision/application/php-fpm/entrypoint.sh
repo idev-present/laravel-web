@@ -38,7 +38,7 @@ fi
 echo "### Ok"
 
 # Check connect to Database
-echo "### STEP: 2 -- Check connect to Database"
+echo "### STEP: 2/4 -- Check connect to Database"
 database_ready(){
 TERM=dumb php -- <<'EOPHP'
 <?php
@@ -64,10 +64,16 @@ until database_ready; do
 done
 echo "### Ok"
 
+# Check updates
+echo "### STEP: 3/4 -- Check updates"
+echo "### Ok"
+
+composer install
+
 echo "================================================================="
 echo "Installation is complete. Your username/password is listed below."
 echo ""
-echo "URL: http://${DOMAIN_NAME}"
+echo "URL: http://${DOMAIN_NAME} or http://localhost:8000"
 echo ""
 echo "================================================================="
 exec "$@"
