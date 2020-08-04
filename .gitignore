@@ -16,11 +16,21 @@ nbproject/
 Thumbs.db
 *.log
 
-# Wordpress
+# Backend
 # =============================================================
 .envs/prod/
 config/certs/
-
+/storage/*.key
+/vendor
+.env
+.env.backup
+.phpunit.result.cache
+Homestead.json
+Homestead.yaml
 # Frontend
 # =============================================================
 node_modules/
+/public/hot
+/public/storage
+npm-debug.log
+yarn-error.log
